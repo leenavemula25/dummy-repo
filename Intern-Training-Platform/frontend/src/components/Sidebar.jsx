@@ -7,7 +7,9 @@ const Sidebar = () => {
 
   const commonLinks = [
     { to: "/dashboard", label: "Overview" },
-    { to: "/courses", label: "Courses" },
+    ...(user?.role !== "HR"
+      ? [{ to: "/courses", label: "Courses" }]
+      : []),
   ];
 
   const internLinks = [
@@ -20,12 +22,13 @@ const Sidebar = () => {
     { to: "/trainer/courses", label: "My Courses" },
     { to: "/trainer/assignments", label: "Assignments" },
     { to: "/trainer/doubts", label: "Doubts" },
-    { to: "/trainer/schedule", label: "Schedules" }, // ✅ new trainer schedule link
+    { to: "/trainer/schedule", label: "Schedules" },
   ];
 
   const hrLinks = [
     { to: "/hr/batches", label: "Batches" },
     { to: "/hr/schedule", label: "Schedules" },
+    { to: "/hr/trainers", label: "Trainers" },
     { to: "/hr/performance", label: "Performance" },
   ];
 
@@ -49,9 +52,11 @@ const Sidebar = () => {
             {link.label}
           </NavLink>
         ))}
+
         <div className="mt-4 border-t pt-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
           {user?.role} Area
         </div>
+
         {roleLinks.map((link) => (
           <NavLink key={link.to} to={link.to} className={linkClasses}>
             {link.label}
